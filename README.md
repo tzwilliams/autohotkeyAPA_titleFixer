@@ -1,6 +1,6 @@
 # autohotkeyAPA_titleFixer
 An autohotkey macro to convert text in selected field to sentence case (APA style for citation titles).
-*Note: Autohotkey is WINDOWS only* (sorry Mac/Linux users!)
+*Note: Autohotkey is WINDOWS only* (sorry Mac/Linux/ChromeOS/etc. users!)
 
 ## tl;dr
 1. run exe file
