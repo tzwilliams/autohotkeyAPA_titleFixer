@@ -3,11 +3,11 @@ An autohotkey macro to convert text in selected field to sentence case (APA styl
 *Note: Autohotkey is WINDOWS only* (sorry Mac/Linux users!)
 
 ## tl;dr
-* run exe file
-* place text cursor inside the title text field in Mendeley or Zotero
-* press the hotkey (either _pause_ or  _\`+e_)
-* be amazed
-* check for capitalization special cases
+1. run exe file
+1. place text cursor inside the title text field in Mendeley or Zotero
+1. press the hotkey (either **pause** or  **\`+e**)
+1. be amazed
+1. check for capitalization special cases
 
 ## General usage
 In order **to use this macro**, run the .exe file (or the.ahk file if you have AutoHotkey installed: http://ahkscript.org/), place the cursor within the Mendeley text field you want to convert (you don't have to select or copy the text onto the clipboard), then activate the hotkey (set to run with the _Pause_ key or with the combination of _\`+e_ (that is, left tick--\`, above tab--and the letter 'e').  The contents of the text field will be converted to sentence case but may need some final manual adjustments for things like acronyms and proper nouns. The macro will run in the Windows taskbar, looking like a green H. To close just right click on the icon and select exit.
