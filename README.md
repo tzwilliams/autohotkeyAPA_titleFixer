@@ -49,8 +49,8 @@ Hope it helps!
 ;				"\b" restricts to a word boundary;
 ;				"\dD" matches e.g. 1D, 2D, 3D)
 	;convert to ALL CAPS	;(Note, this is broken into multiple separate lines
-							; because errors were being introduced when all entries
-							; were in a single command)
+				; because errors were being introduced when all entries
+				; were in a single command)
 	Clipboard := RegExReplace(Clipboard, "i)((MOOC)|(\bSTEM)|(\b\dD\b)|(\bBME\b)|(\bIQ\b)|(\bIRT\b)|(\bSEM\b))", "$U1")
 	Clipboard := RegExReplace(Clipboard, "i)((PBL\b)|(P12)|(P-12)|(K12)|(K-12)|(IEEE)|(\bENE\b))", "$U1")
 	Clipboard := RegExReplace(Clipboard, "i)((\bR\b)|(\bNSF\b)|(\bEPICS\b)|(\bABET\b)|(\bAERA\b)|(\bLTS\b))", "$U1")
