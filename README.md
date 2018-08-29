@@ -21,6 +21,14 @@ This macro does account for **capitalization** of the first letter after a colon
 There is a known bug where the script will occationally place what is on the clipboard into the text field rather than the edited contents of that text field.  If this happens then perform an undo command (ctrl/cmd+z) and try the hotkey again.
 
 ## Code access
+### Downloading the ahk file
+Unfortunately GitHub doesn't make it easy to download a single file. Follow these steps to download the .ahk file.
+1. Go to the file you want to download.
+1. Click it to view the contents within the GitHub UI.
+1. In the top right, right click the Raw button.
+1. Save as...
+
+### Modifying the code
 The **code can be examined** (and then edited) by opening the .ahk file in a text editor (my code was initially inspired from the code posted at https://autohotkey.com/board/topic/24431-convert-text-uppercase-lowercase-capitalized-or-inverted/).  
 
 Within comments in the .ahk file, you will find directions for **how to modify** which key is used to active the macro or change which applications you can active the macro in.  Running the changes will require installing AutoHotkey.
@@ -30,37 +38,36 @@ Hope it helps!
 ## Notes
 * Below are the special cases the script looks for as of 29 Sept 2018 (this is copied from the autohotkey script, so look between the "/b" bookends for acronymns).
 ```
-					;correct common capitalizations ( "i)" sets the whole search string to be case insensitive;
-					;												"\b" restricts to a word boundary;
-					;												"\dD" matches e.g. 1D, 2D, 3D)
-					;the . allows continuation of the previous line
-						;convert to ALL CAPS	;(Note, this is broken into multiple separate lines
-												; because errors were being introduced when all entries
-												; were in a single command)
-						Clipboard := RegExReplace(Clipboard, "i)((MOOC)|(\bSTEM)|(\b\dD\b)|(\bBME\b)|(\bIQ\b)|(\bIRT\b)|(\bSEM\b))", "$U1")
-						Clipboard := RegExReplace(Clipboard, "i)((PBL\b)|(P12)|(P-12)|(K12)|(K-12)|(IEEE)|(\bENE\b))", "$U1")
-						Clipboard := RegExReplace(Clipboard, "i)((\bR\b)|(\bNSF\b)|(\bEPICS\b)|(\bABET\b)|(\bAERA\b)|(\bLTS\b))", "$U1")
-						Clipboard := RegExReplace(Clipboard, "i)((\bJSON\b)|(\bNCEES\b)|(\bFE\b)|(\bUSA\b)|(\bANN\b))", "$U1")
-						Clipboard := RegExReplace(Clipboard, "i)((\bHMM\b)|(\bEDM\b)|(\bLA\b)|(\bLAK\b)|(\bLMS\b)|(\bMATLAB\b))", "$U1")
-						Clipboard := RegExReplace(Clipboard, "i)((\bEEG\b)|(\bEKG\b)|(\bECG\b)|(\bEMG\b)|(\bNSSE\b)|(\bXML\b))", "$U1")
-						Clipboard := RegExReplace(Clipboard, "i)((\bI\b)|(\bII\b)|(\bIII\b)|(\bIV\b)|(\bV\b))", "$U1")
-						Clipboard := RegExReplace(Clipboard, "i)((\bVI\b)|(\bVII\b)|(\bVIII\b)|(\bIX\b)|(\bX\b))", "$U1")
-						Clipboard := RegExReplace(Clipboard, "i)((\bXI\b)|(\bXII\b)|(\bXIII\b)|(\bXIV\b)|(\bXV\b))", "$U1")
+;correct common capitalizations ( "i)" sets the whole search string to be case insensitive;
+;												"\b" restricts to a word boundary;
+;												"\dD" matches e.g. 1D, 2D, 3D)
+	;convert to ALL CAPS	;(Note, this is broken into multiple separate lines
+							; because errors were being introduced when all entries
+							; were in a single command)
+	Clipboard := RegExReplace(Clipboard, "i)((MOOC)|(\bSTEM)|(\b\dD\b)|(\bBME\b)|(\bIQ\b)|(\bIRT\b)|(\bSEM\b))", "$U1")
+	Clipboard := RegExReplace(Clipboard, "i)((PBL\b)|(P12)|(P-12)|(K12)|(K-12)|(IEEE)|(\bENE\b))", "$U1")
+	Clipboard := RegExReplace(Clipboard, "i)((\bR\b)|(\bNSF\b)|(\bEPICS\b)|(\bABET\b)|(\bAERA\b)|(\bLTS\b))", "$U1")
+	Clipboard := RegExReplace(Clipboard, "i)((\bJSON\b)|(\bNCEES\b)|(\bFE\b)|(\bUSA\b)|(\bANN\b))", "$U1")
+	Clipboard := RegExReplace(Clipboard, "i)((\bHMM\b)|(\bEDM\b)|(\bLA\b)|(\bLAK\b)|(\bLMS\b)|(\bMATLAB\b))", "$U1")
+	Clipboard := RegExReplace(Clipboard, "i)((\bEEG\b)|(\bEKG\b)|(\bECG\b)|(\bEMG\b)|(\bNSSE\b)|(\bXML\b))", "$U1")
+	Clipboard := RegExReplace(Clipboard, "i)((\bI\b)|(\bII\b)|(\bIII\b)|(\bIV\b)|(\bV\b))", "$U1")
+	Clipboard := RegExReplace(Clipboard, "i)((\bVI\b)|(\bVII\b)|(\bVIII\b)|(\bIX\b)|(\bX\b))", "$U1")
+	Clipboard := RegExReplace(Clipboard, "i)((\bXI\b)|(\bXII\b)|(\bXIII\b)|(\bXIV\b)|(\bXV\b))", "$U1")
 
 
-				;capitalization special cases
-				Clipboard := RegExReplace(Clipboard, "(vanth)", "VaNTH")
-				Clipboard := RegExReplace(Clipboard, "(markov)", "Markov")
-				Clipboard := RegExReplace(Clipboard, "(google)", "Google")
-				Clipboard := RegExReplace(Clipboard, "(bayes)", "Bayes")
-				Clipboard := RegExReplace(Clipboard, "(python)", "Python")
-				Clipboard := RegExReplace(Clipboard, "(american)", "American")
-				Clipboard := RegExReplace(Clipboard, "(america)", "America")
-				Clipboard := RegExReplace(Clipboard, "(kenya)", "Kenya")
-				Clipboard := RegExReplace(Clipboard, "(nairobi)", "Nairobi")
-				Clipboard := RegExReplace(Clipboard, "(kakuma)", "Kakuma")
-				Clipboard := RegExReplace(Clipboard, "(n-tarp)", "n-TARP")
-				Clipboard := RegExReplace(Clipboard, "(edx)", "edX")
-				Clipboard := RegExReplace(Clipboard, "(futurelearn)", "FutureLearn")
+	;capitalization special cases
+	Clipboard := RegExReplace(Clipboard, "(vanth)", "VaNTH")
+	Clipboard := RegExReplace(Clipboard, "(markov)", "Markov")
+	Clipboard := RegExReplace(Clipboard, "(google)", "Google")
+	Clipboard := RegExReplace(Clipboard, "(bayes)", "Bayes")
+	Clipboard := RegExReplace(Clipboard, "(python)", "Python")
+	Clipboard := RegExReplace(Clipboard, "(american)", "American")
+	Clipboard := RegExReplace(Clipboard, "(america)", "America")
+	Clipboard := RegExReplace(Clipboard, "(kenya)", "Kenya")
+	Clipboard := RegExReplace(Clipboard, "(nairobi)", "Nairobi")
+	Clipboard := RegExReplace(Clipboard, "(kakuma)", "Kakuma")
+	Clipboard := RegExReplace(Clipboard, "(n-tarp)", "n-TARP")
+	Clipboard := RegExReplace(Clipboard, "(edx)", "edX")
+	Clipboard := RegExReplace(Clipboard, "(futurelearn)", "FutureLearn")
 ```
 
