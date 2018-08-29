@@ -5,6 +5,7 @@ An autohotkey macro to convert text in selected field to sentence case (APA styl
 Author: Taylor Williams
 
 ## tl;dr
+1. download [textFieldToSentenceCase.exe](https://github.com/tzwilliams/autohotkeyAPA_titleFixer/blob/master/textFieldToSentenceCase.exe)
 1. run exe file
 1. place text cursor inside the title text field in Mendeley or Zotero
 1. press the hotkey (either **pause** or  **\`+e**)
