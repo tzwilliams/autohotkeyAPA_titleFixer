@@ -1,5 +1,5 @@
 # autohotkeyAPA_titleFixer
-An autohotkey macro to convert text in selected field to sentence case (APA style for citation titles).
+An autohotkey macro to convert text in selected field to sentence case (APA style for citation titles).  
 *Note: Autohotkey is WINDOWS only* (sorry Mac/Linux/ChromeOS/etc. users!)
 
 Author: Taylor Williams
@@ -12,6 +12,13 @@ Author: Taylor Williams
 1. check for capitalization special cases
 
 ## General usage
+### Download
+Unfortunately GitHub doesn't make it easy to download a single file. Most users will only need the .exe file.  (See *Downloading the ahk file* below for those instructions.)
+Follow these steps to __download the .exe file__.
+1. Click on the file you want to download: [textFieldToSentenceCase.exe](https://github.com/tzwilliams/autohotkeyAPA_titleFixer/blob/master/textFieldToSentenceCase.exe).
+1. In the top right, right click the _Download_ button.
+
+### Run and use
 In order **to use this macro**, run the .exe file (or the.ahk file if you have AutoHotkey installed: http://ahkscript.org/), place the cursor within the Mendeley text field you want to convert (you don't have to select or copy the text onto the clipboard), then activate the hotkey (set to run with the _Pause_ key or with the combination of _\`+e_ (that is, left tick--\`, above tab--and the letter 'e').  The contents of the text field will be converted to sentence case but may need some final manual adjustments for things like acronyms and proper nouns. The macro will run in the Windows taskbar, looking like a green H. To close just right click on the icon and select exit.
 
 ## Special cases
@@ -22,11 +29,11 @@ There is a known bug where the script will occationally place what is on the cli
 
 ## Code access
 ### Downloading the ahk file
-Unfortunately GitHub doesn't make it easy to download a single file. Follow these steps to download the .ahk file.
-1. Go to the file you want to download.
+Follow these steps to __download the .ahk file__.
+1. Go to the file you want to download: [textFieldToSentenceCase.ahk](https://github.com/tzwilliams/autohotkeyAPA_titleFixer/blob/master/textFieldToSentenceCase.ahk).  This opens the file in the GitHub UI.
 1. Click it to view the contents within the GitHub UI.
-1. In the top right, right click the Raw button.
-1. Save as...
+1. In the top right, right click the _Raw_ button.
+1. Right click anywhere, select Save as...
 
 ### Modifying the code
 The **code can be examined** (and then edited) by opening the .ahk file in a text editor (my code was initially inspired from the code posted at https://autohotkey.com/board/topic/24431-convert-text-uppercase-lowercase-capitalized-or-inverted/).  
@@ -39,8 +46,8 @@ Hope it helps!
 * Below are the special cases the script looks for as of 29 Sept 2018 (this is copied from the autohotkey script, so look between the "/b" bookends for acronymns).
 ```
 ;correct common capitalizations ( "i)" sets the whole search string to be case insensitive;
-;												"\b" restricts to a word boundary;
-;												"\dD" matches e.g. 1D, 2D, 3D)
+;				"\b" restricts to a word boundary;
+;				"\dD" matches e.g. 1D, 2D, 3D)
 	;convert to ALL CAPS	;(Note, this is broken into multiple separate lines
 							; because errors were being introduced when all entries
 							; were in a single command)
