@@ -13,6 +13,21 @@
 #SingleInstance force ;this will replace the copy in memory with the one being opened
 
 
+;------------app functions
+QuickToolTip(text, delay := 2000){
+	ToolTip, %text%
+	SetTimer ToolTipOff, %delay%
+	return
+
+	ToolTipOff:
+	SetTimer ToolTipOff, Off
+	ToolTip
+	return
+}
+Toast(text, delay := 2000){
+	QuickToolTip(text, delay)
+}
+
 ;============================================
 
 ;Convert text in selected field to sentence case in Mendeley or Zotero (APA style for article titles)
