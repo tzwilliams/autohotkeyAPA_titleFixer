@@ -13,13 +13,28 @@
 #SingleInstance force ;this will replace the copy in memory with the one being opened
 
 
+;------------app functions
+QuickToolTip(text, delay := 2000){
+	ToolTip, %text%
+	SetTimer ToolTipOff, %delay%
+	return
+
+	ToolTipOff:
+	SetTimer ToolTipOff, Off
+	ToolTip
+	return
+}
+Toast(text, delay := 2000){
+	QuickToolTip(text, delay)
+}
+
 ;============================================
 
-	;Convert text in selected field to sentence case in Mendeley or Zotero (APA style for article titles)
+;Convert text in selected field to sentence case in Mendeley or Zotero (APA style for article titles)
 	;In order to use this hotkey, just place the cursor within the text field you want to convert (you don't have to select or copy copy the text onto the clipboard). Then activate the hotkey. Most of the code is inside a function to prevent accidental conflicts with global variables.  (Code modified from forum at https://autohotkey.com/board/topic/24431-convert-text-uppercase-lowercase-capitalized-or-inverted/)
 	;This macro accounts for capitalization of the first letter after a colon or other punctuation which APA specifies.  It will try to capitalize some common acronyms. It does not correctly capitalize proper nouns--you will have to do that manually.
 
-	
+
 	;only active the following if Mendeley or Zotero is the active window.  You can comment or delete this line if you want the macro to be globally active.  Alternatively you can modify the active executable filename if you use another program
 	#IfWinActive ahk_exe MendeleyDesktop.exe
 		` & e:: 	;hotkey used to activate the macro.  You can change it to be whatever you want by modifying what comes before the ::
@@ -31,56 +46,74 @@
 		ConvertToSentenceCase()
 		return
 	}
-	#IfWinActive	;return to allowing hotkeys activation any active window 
+	#IfWinActive	;return to allowing hotkeys activation any active window
 
 	
+	;Alternate method if Zotero or Mendeley can not be used.  Copy the text then press ctrl+alt+shift+T
+	!^+T::
+		InputBox, inText, Input text to convert to APA, Provide the text you want converted to APA.  The results will be on the clipboard (for you to paste as needed)., ,,,,,,, %Clipboard%
+
+		;run converter only if "OK" was pressed
+		if(ErrorLevel = 0){
+			Clipboard := ConvertToSentenceCase(inText)
+		}
+		return
+
 	
 	;Conversion function for APA formatting
-	ConvertToSentenceCase()
+	ConvertToSentenceCase(inText := "")
 	{
 		;enable or disable troubleshooting messages
 			troubleshootingMode := 0		;enable (1) to see tool tips with the current clipboard status at key points in the script
 			sleepStd := 20		;ms for script to pause at several moments in order to prevent errors
+			
 
-		;save clipboard and copy current text field's contents to clipboard
-			Clip_Save:= ClipboardAll	;save what is currently on the clipboard
-			Clipboard:= ""			;clear the clipboard
-			Send ^a				;optional line for when wanting to convert entire text box.  Comment or delete this line if you prefer to preselect the text to convert
-			sleep, 50
-			Send ^c
+			Clip_Save:= ClipboardAll	;save what is currently on the clipboard		
+			
+			if(inText == ""){ ;if no text passed to the function then get text from the cursor's location
 
-		;show troubleshooting messages if enabled
-		if(troubleshootingMode = 1){
-			QuickToolTip(Clipboard, 500)
-			sleep, 500
-			QuickToolTip("*", 200)
-			sleep, sleepStd
-		}
+					Clipboard:= ""			;clear the clipboard
+					Send ^a				;optional line for when wanting to convert entire text box.  Comment or delete this line if you prefer to preselect the text to convert
+					sleep, 50
+					Send ^c
 
-		;look for the pattern "####".  If found, there's a good chance that the title field wasn't selected when the hotkey was activated.  This is included for safety.
-			foundYear := RegExMatch(Clipboard, "\d{4}")
+				;show troubleshooting messages if enabled
+				if(troubleshootingMode = 1){
+					QuickToolTip(Clipboard, 500)
+					sleep, 500
+					QuickToolTip("*", 200)
+					sleep, sleepStd
+				}
 
-		;if the "####" pattern is found, it likely the citation was copied to the clipboard rather than the title. Display message and exit.
-			if(foundYear != 0)
-			{
-				QuickToolTip("Check that the correct field is active", 750)
-				Send, {Up}
-				Send, {Down}
+				;look for the pattern "####".  If found, there's a good chance that the title field wasn't selected when the hotkey was activated.  This is included for safety.
+					foundYear := RegExMatch(Clipboard, "\d{4}")
 
-				return
-			}
-			else{
+				;if the "####" pattern is found, it likely the citation was copied to the clipboard rather than the title. Display message and exit. 
+					if(foundYear != 0){
+						QuickToolTip("Check that the correct field is active", 750)
+						Send, {Up}
+						Send, {Down}
+
+						return
+					}
+			
 				if(troubleshootingMode = 1){
 					QuickToolTip(Clipboard, 500)
 					sleep, 500
 					QuickToolTip("**", 200)
 					sleep, 200
+				}
+
+		
+				Send ^a	;select all
+				Send ^c
+
+			}else{
+				Clipboard:= inText
 			}
-
-
-			Send ^a	;select all
-			Send ^c
-
+			
+			
+			
 			sleep, sleepStd
 			StringLower, Clipboard, Clipboard		;convert the entire clipboard contents to lowercase
 
@@ -101,10 +134,10 @@
 
 
 				sleep, sleepStd
-					;correct common capitalizations ( "i)" sets the whole search string to be case insensitive;
-					;												"\b" restricts to a word boundary;
-					;												"\dD" matches e.g. 1D, 2D, 3D)
-					;the . allows continuation of the previous line
+				;correct common capitalizations ( "i)" sets the whole search string to be case insensitive;
+				;												"\b" restricts to a word boundary;
+				;												"\dD" matches e.g. 1D, 2D, 3D)
+					;the . allows continuation of the previous line (but caused problems, so it isn't used)
 						;convert to ALL CAPS	;(Note, this is broken into multiple separate lines
 												; because errors were being introduced when all entries
 												; were in a single command)
@@ -125,21 +158,21 @@
 						sleep, 200
 					}
 
-			sleep, sleepStd
-				;capitalization special cases
-				Clipboard := RegExReplace(Clipboard, "(vanth)", "VaNTH")
-				Clipboard := RegExReplace(Clipboard, "(markov)", "Markov")
-				Clipboard := RegExReplace(Clipboard, "(google)", "Google")
-				Clipboard := RegExReplace(Clipboard, "(bayes)", "Bayes")
-				Clipboard := RegExReplace(Clipboard, "(python)", "Python")
-				Clipboard := RegExReplace(Clipboard, "(american)", "American")
-				Clipboard := RegExReplace(Clipboard, "(america)", "America")
-				Clipboard := RegExReplace(Clipboard, "(kenya)", "Kenya")
-				Clipboard := RegExReplace(Clipboard, "(nairobi)", "Nairobi")
-				Clipboard := RegExReplace(Clipboard, "(kakuma)", "Kakuma")
-				Clipboard := RegExReplace(Clipboard, "(n-tarp)", "n-TARP")
-				Clipboard := RegExReplace(Clipboard, "(edx)", "edX")
-				Clipboard := RegExReplace(Clipboard, "(futurelearn)", "FutureLearn")
+				sleep, sleepStd
+					;capitalization special cases
+					Clipboard := RegExReplace(Clipboard, "(vanth)", "VaNTH")
+					Clipboard := RegExReplace(Clipboard, "(markov)", "Markov")
+					Clipboard := RegExReplace(Clipboard, "(google)", "Google")
+					Clipboard := RegExReplace(Clipboard, "(bayes)", "Bayes")
+					Clipboard := RegExReplace(Clipboard, "(python)", "Python")
+					Clipboard := RegExReplace(Clipboard, "(american)", "American")
+					Clipboard := RegExReplace(Clipboard, "(america)", "America")
+					Clipboard := RegExReplace(Clipboard, "(kenya)", "Kenya")
+					Clipboard := RegExReplace(Clipboard, "(nairobi)", "Nairobi")
+					Clipboard := RegExReplace(Clipboard, "(kakuma)", "Kakuma")
+					Clipboard := RegExReplace(Clipboard, "(n-tarp)", "n-TARP")
+					Clipboard := RegExReplace(Clipboard, "(edx)", "edX")
+					Clipboard := RegExReplace(Clipboard, "(futurelearn)", "FutureLearn")
 
 
 
@@ -162,40 +195,23 @@
 					Clipboard := RegExReplace(Clipboard, "(\.)$", "")	;removing end of string period
 					Clipboard := RegExReplace(Clipboard, "(&amp;)", "&")	;correcting '&' error sometimes present
 
-		if(troubleshootingMode = 1){
-			QuickToolTip(Clipboard, 500)
-			sleep, 500
-			QuickToolTip("*****", 200)
-			sleep, 200
-		}
-
-					sleep, sleepStd
-					;Send %Clipboard%       ;type the clipboard text at the cursor location
-					Send ^v
-					;Len:= Strlen(Clipboard)
-					;Send +{left %Len%}		;highlights the edited text
-
-
+			if(troubleshootingMode = 1){
+				QuickToolTip(Clipboard, 500)
+				sleep, 500
+				QuickToolTip("*****", 200)
+				sleep, 200
 			}
-		QuickToolTip(Clipboard, 500)	;tooltip for testing
 
-		sleep, sleepStd
-		sleep, 500			;the additional pause in script here is fixing a bug where the old clipboard contents are being pasted
-		Clipboard:= Clip_Save	;restore the clipboard contents from before this function
-		return
+			
+			outText := Clipboard	;store the converted text
+			sleep, sleepStd
+		
+			if(inText = ""){
+				SendInput %outText%
+				Clipboard := Clip_Save	;restore the clipboard contents from before this function
+				return  ;exit ConvertToSentenceCase()
+			}else{
+				return %outText%  ;exit ConvertToSentenceCase()
+			}
+			
 	} ;end convert case function
-
-
-	
-	
-	QuickToolTip(text, delay)
-	{
-		ToolTip, %text%
-		SetTimer ToolTipOff, %delay%
-		return
-
-		ToolTipOff:
-		SetTimer ToolTipOff, Off
-		ToolTip
-		return
-	}
