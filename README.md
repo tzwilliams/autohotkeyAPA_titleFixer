@@ -7,10 +7,12 @@ Author: Taylor Williams
 ## tl;dr
 1. download [textFieldToSentenceCase.exe](https://github.com/tzwilliams/autohotkeyAPA_titleFixer/blob/master/textFieldToSentenceCase.exe)
 1. run exe file
-1. place text cursor inside the title text field in Mendeley or Zotero
+1. place text cursor inside the title text field in the Mendeley or Zotero application
 1. press the hotkey (either **pause** or  **\`+e**)
 1. be amazed
 1. check for capitalization special cases
+
+An **alternate method** if Zotero or Mendeley programs can not be used: copy the text to the clipboard then press **ctrl+alt+shift+T**. Paste the text in the dialog box and press OK.  The converted text will then be available on the clipboard.
 
 ## General usage
 ### Download
@@ -21,6 +23,8 @@ Follow these steps to __download the .exe file__.
 
 ### Run and use
 In order **to use this macro**, run the .exe file (or the.ahk file if you have AutoHotkey installed: http://ahkscript.org/), place the cursor within the Mendeley text field you want to convert (you don't have to select or copy the text onto the clipboard), then activate the hotkey (set to run with the _Pause_ key or with the combination of _\`+e_ (that is, left tick--\`, above tab--and the letter 'e').  The contents of the text field will be converted to sentence case but may need some final manual adjustments for things like acronyms and proper nouns. The macro will run in the Windows taskbar, looking like a green H. To close just right click on the icon and select exit.
+
+An **alternate method** if Zotero or Mendeley programs can not be used: copy the text to the clipboard then press **ctrl+alt+shift+T**. Paste the text in the dialog box and press OK.  The converted text will then be available on the clipboard.
 
 ## Special cases
 This macro does account for **capitalization** of the first letter after a colon or other punctuation which APA specifies. It does try to account for some proper nouns, acronyms, or other special cases (I've included those that I come across*), but please be vigilant to see if you need to fix any manually.  To contribute updates for your special cases, I welcome submitted pull requests or GitHub issues.
